@@ -2,7 +2,23 @@ import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 
+import { TextInput, Checkbox, Button, Group, Box } from '@mantine/core';
+import { useForm } from '@mantine/form';
+
+
 export default function Home() {
+
+  const form = useForm({
+    initialValues: {
+      email: '',
+      termsOfService: false,
+    },
+
+    validate: {
+      email: (value) => (/^\S+@\S+$/.test(value) ? null : 'Invalid email'),
+    },
+  });
+
   return (
     <div className={styles.container}>
       <Head>
@@ -13,7 +29,7 @@ export default function Home() {
 
       <main className={styles.main}>
         <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
+          Whatever to <a href="https://nextjs.org">Next.js!</a>
         </h1>
 
         <p className={styles.description}>
@@ -50,6 +66,27 @@ export default function Home() {
             </p>
           </a>
         </div>
+
+        <Box sx={{ maxWidth: 300 }} mx="auto">
+          <form onSubmit={form.onSubmit((values) => console.log(values))}>
+            <TextInput
+                required
+                label="Email"
+                placeholder="your@email.com"
+                {...form.getInputProps('email')}
+            />
+
+            <Checkbox
+                mt="md"
+                label="I agree to sell my privacy"
+                {...form.getInputProps('termsOfService', { type: 'checkbox' })}
+            />
+
+            <Group position="right" mt="md">
+              <Button type="submit">Submit</Button>
+            </Group>
+          </form>
+        </Box>
       </main>
 
       <footer className={styles.footer}>
