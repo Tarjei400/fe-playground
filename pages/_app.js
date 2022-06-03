@@ -6,6 +6,7 @@ import { MantineProvider } from '@mantine/core';
 
 export default function MyApp({ Component, pageProps }) {
 
+    const test = Math.floor(Math.random()*100)
   return (
       <>
         <Head>
@@ -18,7 +19,7 @@ export default function MyApp({ Component, pageProps }) {
             withNormalizeCSS
             theme={{
               /** Put your mantine theme override here */
-              colorScheme: 'light',
+              colorScheme: test % 2 ? 'dark' : 'light',
             }}
         >
           <Component {...pageProps} />
